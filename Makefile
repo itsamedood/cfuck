@@ -1,9 +1,11 @@
 SRC=src/*.c
-BIN=bin/cfuck
+BIN=bin
+EXEC=cfuck
 CCOMPILER=gcc
-CFLAGS=-o $(BIN) $(SRC)
+CFLAGS=-o $(BIN)/$(EXEC) $(SRC)
 
 compile:
+	mkdir -p $(BIN)
 	$(CCOMPILER) $(CFLAGS)
-	./$(BIN)
+	./$(BIN)/$(EXEC)
 
