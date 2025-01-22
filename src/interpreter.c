@@ -5,7 +5,7 @@
 /**
  * Interprets Brainfuck code.
  */
-interpstate_t interpret(interpstate_t *interpstate, int data[], char *code)
+interpstate_t interpret(interpstate_t *interpstate, int *data, char *code)
 {
   int wasadot = 0;
 
