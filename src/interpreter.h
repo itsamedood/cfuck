@@ -6,7 +6,8 @@
 /**
  * Represents interpreter data.
  */
-typedef struct InterpreterState {
+typedef struct InterpreterState
+{
   int pointer;
   int loopStart;
 } interpstate_t;

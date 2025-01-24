@@ -2,7 +2,7 @@ SRC=src/*.c
 BIN=bin
 EXEC=cfuck
 CCOMPILER=gcc
-CFLAGS=-o $(BIN)/$(EXEC) $(SRC)
+CFLAGS=-Wall -Werror -o $(BIN)/$(EXEC) $(SRC)
 
 compile:
 	mkdir -p $(BIN)

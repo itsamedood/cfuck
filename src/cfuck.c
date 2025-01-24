@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "flags.h"
 #include "interpreter.h"
 
 /**
@@ -60,11 +61,19 @@ void shell(void)
  * All together now!
  * >++++++++[<+++++++++>-]<.>+++[<++++++++++>-]<-.+++++++..+++.>++++++++[<---------->-]<++.
  */
-int main(void)
+int main(int argc, char **argv)
 {
   signal(SIGINT, sigint_handle);
 
-  shell();
+  if (argc < 2)
+  {
+    shell(); 
+  }
+  else
+  {
+    read_flags(argc, argv);
+  }
+
   return 0;
 }
 
