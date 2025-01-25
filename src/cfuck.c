@@ -68,7 +68,7 @@ int main(int argc, char **argv)
     .verbose = 0,
     .no_print = 0,
   };
-  
+
   flags = read_flags(&flags, argc, argv);
 
   shell(&flags);
