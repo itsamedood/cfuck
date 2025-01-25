@@ -1,13 +1,10 @@
-// #include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "flags.h"
 
-flags_t read_flags(int argc, char **argv)
+flags_t read_flags(flags_t *flags, int argc, char **argv)
 {
-  /* All flags are set to 0 by default. */
-  flags_t flags = {};
-
   for (int i = 0; i < argc; i++)
   {
     char *arg = argv[i];
@@ -16,27 +13,38 @@ flags_t read_flags(int argc, char **argv)
     {
       if (strcmp(arg, "-verbose") == 0 || strcmp(arg, "-vb") == 0)
       {
-        flags.verbose = 1;
+        printf("verbose ON\n");
+        flags->verbose = 1;
       }
 
       if (strcmp(arg, "-no_print") == 0 || strcmp(arg, "-np") == 0)
       {
-        flags.no_print = 1;
+        if (flags->verbose)
+        {
+          printf("no_print ON\n");
+        }
+
+        flags->no_print = 1;
       }
 
       if (strcmp(arg, "-help") == 0 || strcmp(arg, "-h") == 0)
       {
-        // flags.help = 1;
+        printf("%s\n", CFUCK_USAGE);
+        printf("Flags:\n");
+        printf("  -verbose  | -vb\n");
+        printf("  -no_print | -np\n");
+        printf("  -help     | -h\n");
+        printf("  -version  | -v\n");
         exit(0);
       }
 
-      if (strcmp(arg, "-version") == 0 || strcmp(arg, "-h") == 0)
+      if (strcmp(arg, "-version") == 0 || strcmp(arg, "-v") == 0)
       {
-        // flags.version = 1;
+        printf("cfuck v%s\n", CFUCK_VERSION);
         exit(0);
       }
     }
   }
 
-  return flags;
+  return *flags;
 }

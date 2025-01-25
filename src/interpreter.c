@@ -1,13 +1,14 @@
 #include <stdio.h>
-#include <stdlib.h>
+// #include <stdlib.h>
+#include "flags.h"
 #include "interpreter.h"
 
 /**
  * Interprets Brainfuck code.
  */
-interpstate_t interpret(interpstate_t *interpstate, int *data, char *code)
+interpstate_t interpret(interpstate_t *interpstate, flags_t *flags, int *data, char *code)
 {
-  int wasadot = 0;
+  int wasadot;
 
   for (int i = 0; code[i] != '\0'; i++)
   {
@@ -44,8 +45,12 @@ interpstate_t interpret(interpstate_t *interpstate, int *data, char *code)
       case '.':
         wasadot = 1;
 
-        /* Cast to char to get ASCII char (72='H') */
-        printf("%c", (char)data[interpstate->pointer]);
+        if (flags == NULL || flags->no_print == 0)
+        {
+          /* Cast to char to get ASCII char (72='H'). */
+          printf("%c", (char)data[interpstate->pointer]);
+        }
+
         break;
 
       case ',':
