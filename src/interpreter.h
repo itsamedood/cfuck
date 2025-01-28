@@ -2,6 +2,7 @@
 #define INTERPRETER_H
 #define BUFFER_SIZE 30000
 #define MAX_CODE_LENGTH 5001 /* x chars + NULL terminator. */
+#define MAX_ITER 1000000
 #include "flags.h"
 
 /**

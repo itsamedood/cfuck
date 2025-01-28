@@ -1,5 +1,5 @@
 #include <stdio.h>
-// #include <stdlib.h>
+#include <stdlib.h>
 #include "flags.h"
 #include "interpreter.h"
 
@@ -9,8 +9,11 @@
 interpstate_t interpret(interpstate_t *interpstate, flags_t *flags, int *data, char *code)
 {
   int wasadot;
+  int i = 0;
+  int j = 0;
 
-  for (int i = 0; code[i] != '\0'; i++)
+  // for (int i = 0; (code[i] != '\0'); i++)
+  while (code[i] != '\0' && j < MAX_ITER)
   {
     switch (code[i])
     {
@@ -53,22 +56,29 @@ interpstate_t interpret(interpstate_t *interpstate, flags_t *flags, int *data, c
 
         break;
 
+      /**
+       * Would love to know why this broke
+       * out of nowhere and demanded {}.
+       */
       case ',':
-        int input, c;
-        int valid = 0;
-
-        while (!valid)
         {
-          printf("  ,: ");
-          scanf("%d", &input);
-          valid = (input < 0 || input > 255) ? 0 : 1;
+          int input = 0;
+          int c = 0;
+          int valid = 0;
 
-          /* Clear input buffer. */
-          while ((c = getchar()) != '\n' && c != EOF);
+          while (!valid)
+          {
+            printf("  ,: ");
+            scanf("%d", &input);
+            valid = (input < 0 || input > 255) ? 0 : 1;
+
+            /* Clear input buffer. */
+            while ((c = getchar()) != '\n' && c != EOF);
+          }
+
+          data[interpstate->pointer] = input;
+          break;
         }
-
-        data[interpstate->pointer] = input;
-        break;
 
       case '[':
         interpstate->loopStart = i;
@@ -88,6 +98,16 @@ interpstate_t interpret(interpstate_t *interpstate, flags_t *flags, int *data, c
       default:
         break;
     }
+
+    i++; // Position in the code.
+    j++; // MAX_ITER count.
+  }
+
+  /* Error if MAX_ITER is hit. */
+  if (j >= MAX_ITER)
+  {
+    printf("Max iterations hit! Check for infinite an loop!\n");
+    exit(1);
   }
 
   if (wasadot == 1)
